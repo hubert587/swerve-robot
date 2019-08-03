@@ -16,6 +16,48 @@
 #include <frc/Solenoid.h>
 //#include <adi/ADIS16448_IMU.h>
 
+
+//SM means Steering Motor
+enum SM_Constant{
+SM_LeftFront = 5,
+SM_LeftBack = 8,
+SM_RightFront = 6,
+SM_RightBack = 7,
+};
+
+//DM means Drive Motor
+enum DM_Constant{
+DM_LeftFront = 3,
+DM_LeftBack = 1,
+DM_RightFront = 4,
+DM_RightBack = 2,
+};
+
+//SE means Steering Encoder
+enum SE_Constant{
+SE_LeftFront = 3,
+SE_LeftBack = 2,
+SE_RightFront = 1,
+SE_RightBack = 0,
+};
+
+//SEO means Steering Encoder Offset
+enum SEO_Constant{
+SEO_LeftFront = 0,
+SEO_LeftBack = 0,
+SEO_RightFront = 0,
+SEO_RightBack = 0,
+//All SEO is currently set to 0 because we still need to figure out the values
+};
+
+
+enum SwerveModule_Constant{
+SwerveModule_LeftFront = 0,
+SwerveModule_LeftBack = 1,
+SwerveModule_RightFront = 2,
+SwerveModule_RightBack = 3,
+};
+
 class Drivetrain : public frc::Subsystem {
  private:
  
