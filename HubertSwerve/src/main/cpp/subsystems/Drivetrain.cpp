@@ -154,8 +154,8 @@ if(driveModeDifferential){
     TankTimeRear.ArcadeDrive(-JoystickY_1, -JoystickZ_1);
     TankTimeFront.ArcadeDrive(-JoystickY_1, -JoystickZ_1);
     MecanumTime.FeedWatchdog();
-    //std::cout << "Run to Tank\n";
-
+    std::cout << "Run to Tank\n";
+printf("tersbbbb");
 
 } else{
 
@@ -174,7 +174,8 @@ if(driveModeDifferential){
     TankTimeRear.FeedWatchdog();
     TankTimeFront.FeedWatchdog();
 
-   // std::cout << "Run to Mecanum\n";
+   std::cout << "Run to Mecanum\n";
+   printf("terst");
 
 }
 
