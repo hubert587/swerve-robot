@@ -1,79 +1,80 @@
 
 
-
-
-
-
-
-
-
+#include "RobotMap.h"
+#include "subsystems/SwerveModule.h"
+#include "subsystems/SwerveVector.h"
+#include "subsystems/SwerveDrive.h"
 
 
 //disclaimer, I have no idea what im doing
 
 
-SwerveDrive::SwerveDirve() {
+SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 		//initialize array of modules
-		//array can be any size, as long as the position of each module is specified in its constructor
-		modules = new SwerveModule[] {
 			//front left
-			new SwerveModule(new Talon(RobotMap.FL_DRIVE),
-					new Talon(RobotMap.FL_STEER),
-					new AbsoluteEncoder(RobotMap.FL_ENCODER, Constants.FL_ENC_OFFSET),
-					-Constants.WHEEL_BASE_WIDTH/2,
-					Constants.WHEEL_BASE_LENGTH/2
-					),
+			modules[SwerveModule_LeftFront] = new SwerveModule(
+				    new rev::CANSparkMax(DM_LeftFront, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+				    new WPI_TalonSRX(SM_LeftFront),
+					new AbsoluteEncoder(SE_LeftFront, SEO_LeftFront),
+					(-WHEEL_BASE_WIDTH/2.0),
+					(WHEEL_BASE_LENGTH/2.0)
+					);
 			//front right
-			new SwerveModule(new Talon(RobotMap.FR_DRIVE), 
-					new Talon(RobotMap.FR_STEER),
-					new AbsoluteEncoder(RobotMap.FR_ENCODER, Constants.FR_ENC_OFFSET),
-					Constants.WHEEL_BASE_WIDTH/2,
-					Constants.WHEEL_BASE_LENGTH/2
-					),
+			modules[SwerveModule_RightFront] = new SwerveModule(				    
+				    new rev::CANSparkMax(DM_RightFront, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+				    new WPI_TalonSRX(SM_RightFront),
+					new AbsoluteEncoder(SE_RightFront, SEO_RightFront),
+					(WHEEL_BASE_WIDTH/2.0),
+					(WHEEL_BASE_LENGTH/2.0)
+					);
 			//back left
-			new SwerveModule(new Talon(RobotMap.BL_DRIVE),
-					new Talon(RobotMap.BL_STEER),
-					new AbsoluteEncoder(RobotMap.BL_ENCODER, Constants.BL_ENC_OFFSET),
-					-Constants.WHEEL_BASE_WIDTH/2,
-					-Constants.WHEEL_BASE_LENGTH/2
-					),
+			modules[SwerveModule_LeftBack] = new SwerveModule(				    
+				    new rev::CANSparkMax(DM_LeftBack, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+				    new WPI_TalonSRX(SM_LeftBack),
+					new AbsoluteEncoder(SE_LeftBack, SEO_LeftBack),
+					(-WHEEL_BASE_WIDTH/2.0),
+					(-WHEEL_BASE_LENGTH/2.0)
+					);
 			//back right
-			new SwerveModule(new Talon(RobotMap.BR_DRIVE), 
-					new Talon(RobotMap.BR_STEER),
-					new AbsoluteEncoder(RobotMap.BR_ENCODER, Constants.BR_ENC_OFFSET),
-					Constants.WHEEL_BASE_WIDTH/2,
-					-Constants.WHEEL_BASE_LENGTH/2
-					)
-		};
+			modules[SwerveModule_RightBack] = new SwerveModule(				    
+				    new rev::CANSparkMax(DM_RightBack, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+				    new WPI_TalonSRX(SM_RightBack),
+					new AbsoluteEncoder(SE_RightBack, SEO_RightBack),
+					(WHEEL_BASE_WIDTH/2.0),
+					(-WHEEL_BASE_LENGTH/2.0)
+					);
+		pivotX = 0;
+		pivotY = 0;
 	}
 
 
 
 
-     void SwerveDrive::setPivot(double pivotX, double pivotY) {
-		this.pivotX = pivotX;
-		this.pivotY = pivotY;
+     void SwerveDrive::setPivot(double _pivotX, double _pivotY) {
+		pivotX = _pivotX;
+		pivotY = _pivotY;
 	}
 
     void SwerveDrive::driveWithOrient(double translationX, double translationY, double rotation, double heading) {
-		Vector[] vects = new Vector[modules.length];
-		Vector transVect = new Vector(translationX, translationY),
-				pivotVect = new Vector(pivotX, pivotY);
+		SwerveVector vects[NUMBER_SWERVE_MODULES];
+		SwerveVector transVect{translationX, translationY};
+		SwerveVector pivotVect{pivotX, pivotY};
 		
 		//if there is only one module ignore rotation
-		if (modules.length < 2)
-			for (SwerveModule module : modules) 
-				module.set(transVect.getAngle(), Math.min(1, transVect.getMagnitude())); //cap magnitude at 1
+		if (NUMBER_SWERVE_MODULES < 2)
+			for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
+				modules[i]->set(transVect.getAngle(), fmin(1, transVect.getMagnitude())); //cap magnitude at 1
+			}
 
 		double maxDist = 0;
-		for (int i = 0; i < modules.length; i++) {
-			vects[i] = new Vector(modules[i].positionX, modules[i].positionY);
+		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
+			vects[i] = SwerveVector{modules[i]->getPositionX(), modules[i]->getPositionY()};
 			vects[i].subtract(pivotVect); //calculate module's position relative to pivot point
-			maxDist = Math.max(maxDist, vects[i].getMagnitude()); //find farthest distance from pivot
+			maxDist = fmax(maxDist, vects[i].getMagnitude()); //find farthest distance from pivot
 		}
 		
 		double maxPower = 1;
-		for (int i = 0; i < modules.length; i++) {
+		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
 			//rotation motion created by driving each module perpendicular to
 			//the vector from the pivot point
 			vects[i].makePerpendicular();
@@ -83,16 +84,16 @@ SwerveDrive::SwerveDirve() {
 			vects[i].add(transVect);
 			//calculate largest power assigned to modules
 			//if any exceed 100%, all must be scale down
-			maxPower = Math.max(maxPower, vects[i].getMagnitude());
+			maxPower = fmax(maxPower, vects[i].getMagnitude());
 		}
 		
 		double power;
-		for (int i = 0; i < modules.length; i++) {
+		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
 			power = vects[i].getMagnitude() / maxPower; //scale down by the largest power that exceeds 100%
 			if (power > .05) {
-				modules[i].set(vects[i].getAngle()-Math.PI/2, power);
+				modules[i]->set(vects[i].getAngle()-(M_PI/2.0), power);
 			} else {
-				modules[i].rest();
+				modules[i]->rest();
 			}
 		}
 	}
@@ -103,14 +104,18 @@ SwerveDrive::SwerveDirve() {
 	}
 
     void SwerveDrive::enable() {
-		for (SwerveModule module : modules) module.enable();
+		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
+			modules[i]->enable();
+		}
 	}
 	
 	void SwerveDrive::disable() {
-		for (SwerveModule module : modules) module.disable();
+		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
+			modules[i]->disable();
+		}
 	}
 
-    void SwerveDrive::initDefaultCommand() {
+    void SwerveDrive::InitDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }

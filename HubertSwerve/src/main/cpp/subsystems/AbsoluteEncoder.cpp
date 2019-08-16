@@ -1,28 +1,31 @@
 
 
 #include "subsystems/AbsoluteEncoder.h"
+#include <cmath>
 
 //class AbsoluteEncoder extends AnalogInput {
 
-double angleOffset;
-boolean flipped = false;
+//double angleOffset;
+//bool flipped = false;
 
-AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset) {
-    super(channel);
-    this.angleOffset = Math.toRadians(angleOffset);
+AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset):AnalogInput(channel) {
+    flipped = false;
+    angleOffset = (angleOffset*M_PI/180.0);
+
+    //this.angleOffset = Math.toRadians(angleOffset);
 }
 
-AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset, boolean flipped) {
-    super(channel);
-    this.angleOffset = Math.toRadians(angleOffset);
-    this.flipped = flipped;
+AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset, bool flipped):AnalogInput(channel) {
+
+    angleOffset = (angleOffset*M_PI/180.0);
+    flipped = flipped;
 }
 
 double AbsoluteEncoder::getAngle() {
     double angle;
-    if (flipped) angle = (4.8 - getVoltage()) * (2*Math.PI) / 4.6;
-    else angle = (getVoltage() - 0.2) * (2*Math.PI) / 4.6;
-    return (angle + angleOffset) % (2*Math.PI);
+    if (flipped) angle = (4.8 - GetVoltage()) * (2.0*M_PI) / 4.6;
+    else angle = (GetVoltage() - 0.2) * (2.0*M_PI) / 4.6;
+    return std::fmod((angle + angleOffset),(2.0*M_PI));
 }
 
 double AbsoluteEncoder::pidGet() {

@@ -14,12 +14,53 @@
  * floating around.
  */
 
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
 
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
+//SM means Steering Motor
+enum SM_Constant{
+SM_LeftFront = 5,
+SM_LeftBack = 8,
+SM_RightFront = 6,
+SM_RightBack = 7,
+};
+
+//DM means Drive Motor
+enum DM_Constant{
+DM_LeftFront = 3,
+DM_LeftBack = 1,
+DM_RightFront = 4,
+DM_RightBack = 2,
+};
+
+//SE means Steering Encoder
+enum SE_Constant{
+SE_LeftFront = 3,
+SE_LeftBack = 2,
+SE_RightFront = 1,
+SE_RightBack = 0,
+};
+
+//SEO means Steering Encoder Offset
+enum SEO_Constant{
+SEO_LeftFront = 0,
+SEO_LeftBack = 0,
+SEO_RightFront = 0,
+SEO_RightBack = 0,
+//All SEO is currently set to 0 because we still need to figure out the values
+};
+
+
+enum SwerveModule_Constant{
+SwerveModule_LeftFront = 0,
+SwerveModule_LeftBack = 1,
+SwerveModule_RightFront = 2,
+SwerveModule_RightBack = 3,
+NUMBER_SWERVE_MODULES = 4
+};
+
+const double WHEEL_BASE_WIDTH = 24.0;
+const double WHEEL_BASE_LENGTH = 24.0;
+
+const double SWERVE_STEER_P = .5;
+const double SWERVE_STEER_I = 0;
+const double SWERVE_STEER_D = 0;
+const double SWERVE_STEER_CAP = .5; //speed limit on the steering motor
