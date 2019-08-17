@@ -44,7 +44,7 @@ enum SEO_Constant{
 SEO_LeftFront = 0,
 SEO_LeftBack = 0,
 SEO_RightFront = 0,
-SEO_RightBack = 0,
+SEO_RightBack = 300,
 //All SEO is currently set to 0 because we still need to figure out the values
 };
 

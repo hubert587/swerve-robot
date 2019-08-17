@@ -26,7 +26,7 @@
 
 //ExampleSubsystem Robot::m_subsystem;
 OI Robot::m_oi;
-Drivetrain Robot::m_drivetrain;
+SwerveDrive Robot::m_drivetrain;
 Lift Robot::m_lift;
 Beak Robot::m_beak;
 
@@ -142,7 +142,7 @@ void Robot::RobotInit() {
 
   std::thread visionThread(VisionThread);
   visionThread.detach();
-
+  m_drivetrain.enable();
 }
 
 /**

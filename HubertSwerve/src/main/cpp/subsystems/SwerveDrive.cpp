@@ -1,5 +1,5 @@
 
-
+#include "commands/DriveCommand.h"
 #include "RobotMap.h"
 #include "subsystems/SwerveModule.h"
 #include "subsystems/SwerveVector.h"
@@ -10,6 +10,7 @@
 
 
 SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
+	printf("testing");
 		//initialize array of modules
 			//front left
 			modules[SwerveModule_LeftFront] = new SwerveModule(
@@ -116,6 +117,7 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 	}
 
     void SwerveDrive::InitDefaultCommand() {
+		SetDefaultCommand(new DriveCommand{});
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }

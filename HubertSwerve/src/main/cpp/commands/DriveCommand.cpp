@@ -19,7 +19,8 @@ void DriveCommand::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void DriveCommand::Execute() {
 
-Robot::m_drivetrain.Drive();
+//Robot::m_drivetrain.Drive();
+Robot::m_drivetrain.driveNormal(Robot::m_oi.PilotJoystick.GetX()/2, Robot::m_oi.PilotJoystick.GetY()/2, Robot::m_oi.PilotJoystick.GetZ()/2);
 
 }
 

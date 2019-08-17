@@ -11,7 +11,7 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "OI.h"
-#include "subsystems/Drivetrain.h"
+#include "subsystems/SwerveDrive.h"
 #include "subsystems/Lift.h"
 #include "subsystems/Beak.h"
 #include "DigitalInput.h"
@@ -19,7 +19,7 @@
 
 class Robot : public frc::TimedRobot {
  public:
-  static Drivetrain m_drivetrain;
+  static SwerveDrive m_drivetrain;
   static OI m_oi;
   static Lift m_lift;
   static Beak m_beak;
