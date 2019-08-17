@@ -105,6 +105,9 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 	}
 
     void SwerveDrive::enable() {
+		//to test module by module
+		//modules[2]->enable();
+
 		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
 			modules[i]->enable();
 		}

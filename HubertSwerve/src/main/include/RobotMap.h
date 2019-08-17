@@ -58,7 +58,7 @@ NUMBER_SWERVE_MODULES = 4
 };
 
 const double WHEEL_BASE_WIDTH = 24.0;
-const double WHEEL_BASE_LENGTH = 24.0;
+const double WHEEL_BASE_LENGTH = 22.0;
 
 const double SWERVE_STEER_P = .5;
 const double SWERVE_STEER_I = 0;
