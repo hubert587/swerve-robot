@@ -54,8 +54,8 @@ void SwerveModule::set(double angle, double speed) {
     double currentangle = steerEncoder->getAngle();
     std:: cout << "currentangle = " << currentangle << " angle = " << angle;
     angle = wrapAngle(angle);
-    double dist = abs(angle-currentangle);
-    if (dist > M_PI/2 && dist < 3*M_PI/2) {
+    double dist = fabs(angle-currentangle);
+    if (dist > M_PI/2.0 && dist < 3.0*M_PI/2.0) {
         angle = wrapAngle(angle + M_PI);
         speed *= -1; 
     }
