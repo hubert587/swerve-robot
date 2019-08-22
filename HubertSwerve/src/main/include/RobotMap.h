@@ -18,25 +18,25 @@
 //SM means Steering Motor
 enum SM_Constant{
 SM_LeftFront = 5,
-SM_LeftBack = 8,
-SM_RightFront = 6,
+SM_LeftBack = 6,
+SM_RightFront = 8,
 SM_RightBack = 7,
 };
 
 //DM means Drive Motor
 enum DM_Constant{
-DM_LeftFront = 3,
-DM_LeftBack = 1,
-DM_RightFront = 4,
+DM_LeftFront = 4,
+DM_LeftBack = 3,
+DM_RightFront = 1,
 DM_RightBack = 2,
 };
 
 //SE means Steering Encoder
 enum SE_Constant{
-SE_LeftFront = 3,
-SE_LeftBack = 2,
-SE_RightFront = 1,
-SE_RightBack = 0,
+SE_LeftFront = 0,
+SE_LeftBack = 1,
+SE_RightFront = 2,
+SE_RightBack = 3,
 };
 
 //SEO means Steering Encoder Offset
@@ -60,7 +60,7 @@ NUMBER_SWERVE_MODULES = 4
 const double WHEEL_BASE_WIDTH = 24.0;
 const double WHEEL_BASE_LENGTH = 22.0;
 
-const double SWERVE_STEER_P = .5;
+const double SWERVE_STEER_P = .3;
 const double SWERVE_STEER_I = 0;
 const double SWERVE_STEER_D = 0;
 const double SWERVE_STEER_CAP = .5; //speed limit on the steering motor

@@ -2,6 +2,7 @@
 #include "subsystems/SwerveModule.h"
 #include "RobotMap.h"
 #include <cmath>
+#include <iostream>
 
 SwerveModule::SwerveModule(
             rev::CANSparkMax *driveCntr, 
@@ -10,6 +11,8 @@ SwerveModule::SwerveModule(
             double posX, 
             double posY) 
     {
+    double RampValue = 0.0; // 0.5
+    double BrakeValue = 1;
         enabled = false;
         steerController = steerCntr;
     	driveController = driveCntr;
@@ -26,6 +29,12 @@ SwerveModule::SwerveModule(
     	steerPID->SetOutputRange(-SWERVE_STEER_CAP, SWERVE_STEER_CAP);
     	steerPID->SetContinuous();
     	steerPID->Disable();
+
+    driveController->SetSmartCurrentLimit(50);
+    driveController->SetSecondaryCurrentLimit(80);
+    driveController->SetOpenLoopRampRate(RampValue);
+    driveController->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    driveController->BurnFlash();
 }
 
 void SwerveModule::enable() {
@@ -42,14 +51,18 @@ void SwerveModule::disable() {
 
 void SwerveModule::set(double angle, double speed) {
     if (!enabled) return;
+    double currentangle = steerEncoder->getAngle();
+    std:: cout << "currentangle = " << currentangle << " angle = " << angle;
     angle = wrapAngle(angle);
-    double dist = abs(angle-steerEncoder->getAngle());
+    double dist = abs(angle-currentangle);
     if (dist > M_PI/2 && dist < 3*M_PI/2) {
         angle = wrapAngle(angle + M_PI);
         speed *= -1; 
     }
+     std:: cout << "dist = " << dist << " newangle = " << angle << "\n";
     steerPID->SetSetpoint(angle);
-	driveController->Set(fmax(-1, fmin(1, speed)));
+	//driveController->Set(fmax(-1, fmin(1, speed)));
+    driveController->Set(0);
 }
 
 void SwerveModule::rest() {

@@ -4,6 +4,7 @@
 #include "subsystems/SwerveModule.h"
 #include "subsystems/SwerveVector.h"
 #include "subsystems/SwerveDrive.h"
+#include <iostream>
 
 
 //disclaimer, I have no idea what im doing
@@ -20,6 +21,7 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 					(-WHEEL_BASE_WIDTH/2.0),
 					(WHEEL_BASE_LENGTH/2.0)
 					);
+					/**/
 			//front right
 			modules[SwerveModule_RightFront] = new SwerveModule(				    
 				    new rev::CANSparkMax(DM_RightFront, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
@@ -44,6 +46,7 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 					(WHEEL_BASE_WIDTH/2.0),
 					(-WHEEL_BASE_LENGTH/2.0)
 					);
+					/**/
 		pivotX = 0;
 		pivotY = 0;
 	}
@@ -61,6 +64,7 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 		SwerveVector transVect{translationX, translationY};
 		SwerveVector pivotVect{pivotX, pivotY};
 		
+		//std::cout << "X = " << translationX << " Y = " << translationY << " R = " << rotation << " \n";
 		//if there is only one module ignore rotation
 		if (NUMBER_SWERVE_MODULES < 2)
 			for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {

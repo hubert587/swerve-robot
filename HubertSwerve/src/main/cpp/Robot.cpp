@@ -140,8 +140,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
 
-  std::thread visionThread(VisionThread);
-  visionThread.detach();
+  //std::thread visionThread(VisionThread);
+  //visionThread.detach();
   m_drivetrain.enable();
 }
 
