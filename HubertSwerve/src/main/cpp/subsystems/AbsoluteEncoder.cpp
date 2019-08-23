@@ -28,7 +28,7 @@ double AbsoluteEncoder::getAngle() {
     return std::fmod((angle + angleOffset),(2.0*M_PI));
 }
 
-double AbsoluteEncoder::pidGet() {
+double AbsoluteEncoder::PIDGet() {
     return getAngle();
 }
 

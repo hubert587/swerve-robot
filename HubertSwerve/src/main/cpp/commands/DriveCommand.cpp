@@ -20,7 +20,7 @@ void DriveCommand::Initialize() {}
 void DriveCommand::Execute() {
 
 //Robot::m_drivetrain.Drive();
-Robot::m_drivetrain.driveNormal(Robot::m_oi.PilotJoystick.GetX()/2, Robot::m_oi.PilotJoystick.GetY()/2, Robot::m_oi.PilotJoystick.GetZ()/2);
+Robot::m_drivetrain.driveNormal(Robot::m_oi.PilotJoystick.GetX(), Robot::m_oi.PilotJoystick.GetY(), Robot::m_oi.PilotJoystick.GetZ());
 
 }
 
