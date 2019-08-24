@@ -49,6 +49,7 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 					/**/
 		pivotX = 0;
 		pivotY = 0;
+
 	}
 
 
@@ -96,11 +97,13 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 		for (int i = 0; i < NUMBER_SWERVE_MODULES; i++) {
 			power = vects[i].getMagnitude() / maxPower; //scale down by the largest power that exceeds 100%
 			if (power > .05) {
+				//std::cout << "module = " << i << " ";
 				modules[i]->set(vects[i].getAngle()-(M_PI/2.0), power);
 			} else {
 				modules[i]->rest();
 			}
 		}
+		//std::cout << "\n";
 	}
 
 

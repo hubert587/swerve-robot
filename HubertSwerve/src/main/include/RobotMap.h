@@ -40,13 +40,11 @@ SE_RightBack = 3,
 };
 
 //SEO means Steering Encoder Offset
-enum SEO_Constant{
-SEO_LeftFront = 0,
-SEO_LeftBack = 0,
-SEO_RightFront = 0,
-SEO_RightBack = 300,
+const double SEO_LeftFront = 2.69 + 0.85; 
+const double SEO_LeftBack = 0.075 - 0.2; //2.595;
+const double SEO_RightFront = 2.979 + 0.35; //4.651;
+const double SEO_RightBack = 0.715 + 1.7;
 //All SEO is currently set to 0 because we still need to figure out the values
-};
 
 
 enum SwerveModule_Constant{
@@ -60,7 +58,7 @@ NUMBER_SWERVE_MODULES = 4
 const double WHEEL_BASE_WIDTH = 24.0;
 const double WHEEL_BASE_LENGTH = 22.0;
 
-const double SWERVE_STEER_P = .3;
+const double SWERVE_STEER_P = .5;
 const double SWERVE_STEER_I = 0;
 const double SWERVE_STEER_D = 0;
-const double SWERVE_STEER_CAP = .5; //speed limit on the steering motor
+const double SWERVE_STEER_CAP = .7; //speed limit on the steering motor

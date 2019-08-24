@@ -17,9 +17,9 @@ class AbsoluteEncoder : public frc::AnalogInput {
 	
 
  public:
-	AbsoluteEncoder(int channel, double angleOffset);
+	AbsoluteEncoder(int channel, double angOffset);
 	
-	AbsoluteEncoder(int channel, double angleOffset, bool flipped);
+	AbsoluteEncoder(int channel, double angOffset, bool flip);
 	
      double getAngle();
 	

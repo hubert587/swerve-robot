@@ -52,17 +52,19 @@ void SwerveModule::disable() {
 void SwerveModule::set(double angle, double speed) {
     if (!enabled) return;
     double currentangle = steerEncoder->getAngle();
-    std:: cout << "currentangle = " << currentangle << " angle = " << angle;
+    //std:: cout << "currentangle = " << currentangle << " angle = " << angle;
     angle = wrapAngle(angle);
     double dist = fabs(angle-currentangle);
     if (dist > M_PI/2.0 && dist < 3.0*M_PI/2.0) {
         angle = wrapAngle(angle + M_PI);
         speed *= -1; 
     }
-     std:: cout << "dist = " << dist << " newangle = " << angle << "\n";
+    // std:: cout << "dist = " << dist << " newangle = " << angle << "\n";
     steerPID->SetSetpoint(angle);
-	//driveController->Set(fmax(-1, fmin(1, speed)));
-    driveController->Set(0);
+    speed = speed / 2.0;
+	driveController->Set(fmax(-1, fmin(1, speed)));
+    //driveController->Set(0);
+
 }
 
 void SwerveModule::rest() {

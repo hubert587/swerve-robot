@@ -2,29 +2,37 @@
 
 #include "subsystems/AbsoluteEncoder.h"
 #include <cmath>
+#include <iostream>
 
 //class AbsoluteEncoder extends AnalogInput {
 
 //double angleOffset;
 //bool flipped = false;
 
-AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset):AnalogInput(channel) {
+AbsoluteEncoder::AbsoluteEncoder(int channel, double angOffset):AnalogInput(channel) {
     flipped = false;
-    angleOffset = (angleOffset*M_PI/180.0);
-
+    //angleOffset = (angOffset*(2.0*M_PI)/4.6);
+    angleOffset = angOffset;
     //this.angleOffset = Math.toRadians(angleOffset);
 }
 
-AbsoluteEncoder::AbsoluteEncoder(int channel, double angleOffset, bool flipped):AnalogInput(channel) {
+AbsoluteEncoder::AbsoluteEncoder(int channel, double angOffset, bool flip):AnalogInput(channel) {
 
-    angleOffset = (angleOffset*M_PI/180.0);
-    flipped = flipped;
+    //angleOffset = (angOffset*(2.0*M_PI)/4.6);
+    angleOffset = angOffset;
+    flipped = flip;
 }
 
 double AbsoluteEncoder::getAngle() {
     double angle;
-    if (flipped) angle = (4.8 - GetVoltage()) * (2.0*M_PI) / 4.6;
-    else angle = (GetVoltage() - 0.2) * (2.0*M_PI) / 4.6;
+    double voltage = GetVoltage();
+    if (voltage > 4.8) voltage = 4.8;
+    if (voltage < 0.2) voltage = 0.2;
+    //std::cout << GetChannel() << "v=" << voltage;
+    if (GetChannel() == 3) std::cout <<"\n";
+    if (flipped) angle = (4.8 - voltage) * (2.0*M_PI) / 4.6;
+    else angle = (voltage - 0.2) * (2.0*M_PI) / 4.6;
+    std::cout << GetChannel() << "a=" << angle << "o=" << angleOffset << " ";
     return std::fmod((angle + angleOffset),(2.0*M_PI));
 }
 
