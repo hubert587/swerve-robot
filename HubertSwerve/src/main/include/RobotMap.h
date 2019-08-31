@@ -40,10 +40,10 @@ SE_RightBack = 3,
 };
 
 //SEO means Steering Encoder Offset
-const double SEO_LeftFront = 2.69 + 0.85; 
-const double SEO_LeftBack = 0.075 - 0.2; //2.595;
-const double SEO_RightFront = 2.979 + 0.35; //4.651;
-const double SEO_RightBack = 0.715 + 1.7;
+double SEO_LeftFront = 0.0; 
+double SEO_LeftBack = 0.0;
+double SEO_RightFront = 0.00;
+double SEO_RightBack = 0.00;
 //All SEO is currently set to 0 because we still need to figure out the values
 
 
