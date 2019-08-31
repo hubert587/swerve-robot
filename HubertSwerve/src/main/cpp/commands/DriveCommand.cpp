@@ -24,8 +24,8 @@ void DriveCommand::Execute() {
 
 bool LB = OI::PilotJoystick.GetRawButtonPressed(5);
 bool RB = OI::PilotJoystick.GetRawButtonPressed(6);
-bool Y = OI::PilotJoystick.GetRawButtonPressed(2);
-bool A = OI::PilotJoystick.GetRawButtonPressed(4);
+bool Y = OI::PilotJoystick.GetRawButtonPressed(4);
+bool A = OI::PilotJoystick.GetRawButtonPressed(2);
 if (LB) gear0 = 0;
 if (RB) gear0 = 1;
 double speedDiv = 1.0;
