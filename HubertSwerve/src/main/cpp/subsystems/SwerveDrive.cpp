@@ -65,6 +65,8 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 		SwerveVector transVect{translationX, translationY};
 		SwerveVector pivotVect{pivotX, pivotY};
 		
+		transVect.rotate(heading);
+
 		//std::cout << "X = " << translationX << " Y = " << translationY << " R = " << rotation << " \n";
 		//if there is only one module ignore rotation
 		if (NUMBER_SWERVE_MODULES < 2)

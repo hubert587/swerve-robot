@@ -39,3 +39,9 @@ void SwerveVector::makePerpendicular() {
     x = y;
     y = -temp;
 }
+
+void SwerveVector::rotate(double radians) {
+    double tempx = x;
+    x = x * cos(radians) - y * sin(radians);
+    y = tempx * sin(radians) + y * cos(radians);
+}

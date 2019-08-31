@@ -12,6 +12,7 @@ class SwerveVector {
         void add(SwerveVector v);
         void subtract(SwerveVector v);
         void makePerpendicular();
+        void rotate(double radians);
 
     private:
         double x;

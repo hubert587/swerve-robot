@@ -61,7 +61,6 @@ void SwerveModule::set(double angle, double speed) {
     }
     // std:: cout << "dist = " << dist << " newangle = " << angle << "\n";
     steerPID->SetSetpoint(angle);
-    speed = speed / 2.0;
 	driveController->Set(fmax(-1, fmin(1, speed)));
     //driveController->Set(0);
 

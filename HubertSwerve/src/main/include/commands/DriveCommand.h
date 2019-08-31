@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <adi/ADIS16448_IMU.h>
 
 class DriveCommand : public frc::Command {
  public:
@@ -17,4 +18,8 @@ class DriveCommand : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+  int gear0;
+  //Defines Gyroscope
+    frc::ADIS16448_IMU m_imu{frc::ADIS16448_IMU::kZ, frc::ADIS16448_IMU::kComplementary, frc::SPI::kMXP};
+  bool iAMnotU;
 };
