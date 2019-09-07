@@ -47,7 +47,7 @@ if (iAMnotU == true) angel = ((m_imu.GetAngle() * M_PI) / 180.0);
 Robot::m_drivetrain.driveWithOrient
                                (-Robot::m_oi.PilotJoystick.GetX() / speedDiv,
                                  Robot::m_oi.PilotJoystick.GetY() / speedDiv,
-                                -Robot::m_oi.PilotJoystick.GetZ() / speedDiv, angel);
+                                -Robot::m_oi.PilotJoystick.GetZ() / (speedDiv * 2.0), angel);
 
 }
 
