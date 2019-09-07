@@ -139,8 +139,8 @@ void Robot::RobotInit() {
  // m_chooser.AddOption("My Auto", &m_myAuto);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  frc::SmartDashboard::PutString("DB/String 0", "3.54");
-	std::string strLeftFront = frc::SmartDashboard::GetString("DB/String 0", "");
+  //frc::SmartDashboard::PutString("DB/String 0", "3.54");
+	//std::string strLeftFront = frc::SmartDashboard::GetString("DB/String 0", "");
 
   //std::thread visionThread(VisionThread);
   //visionThread.detach();

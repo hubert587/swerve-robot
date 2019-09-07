@@ -24,4 +24,7 @@ class AbsoluteEncoder : public frc::AnalogInput {
      double getAngle();
 	
 	 double PIDGet() override;
+
+	 double GetAngleOffset();
+	 void SetAngleOffset(double offset);
 };

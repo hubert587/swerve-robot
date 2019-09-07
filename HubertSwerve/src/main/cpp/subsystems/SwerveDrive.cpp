@@ -5,7 +5,8 @@
 #include "subsystems/SwerveVector.h"
 #include "subsystems/SwerveDrive.h"
 #include <iostream>
-
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/Preferences.h>
 
 //disclaimer, I have no idea what im doing
 
@@ -61,6 +62,47 @@ SwerveDrive::SwerveDrive() : Subsystem("swervedrive") {
 	}
 
     void SwerveDrive::driveWithOrient(double translationX, double translationY, double rotation, double heading) {
+		
+		std::string stringLabel = "DB/String ";
+		std::string buttonLabel = "DB/Button ";
+		std::string ledLabel = "DB/LED ";
+		std::string sliderLabel = "DB/Slider ";
+		std::string angleOffsetLabel = "AngleOffset";
+		frc::Preferences *pref = frc::Preferences::GetInstance();
+
+		for(int x=0;x<NUMBER_SWERVE_MODULES;x++){
+			
+			std::string numberLabel = std::to_string(x);
+			std::string numberOutputLabel = std::to_string(5 + x);
+
+			
+			if(frc::SmartDashboard::GetBoolean(buttonLabel + "0", false)) {
+				modules[x]->GetAbsoluteEncoder()->SetAngleOffset(pref->GetDouble(angleOffsetLabel + numberLabel));
+				frc::SmartDashboard::PutString(stringLabel + numberOutputLabel, std::to_string(pref->GetDouble(angleOffsetLabel + numberLabel)));
+			}
+			if(frc::SmartDashboard::GetBoolean(buttonLabel + "1", false)) {
+				modules[x]->GetAbsoluteEncoder()->SetAngleOffset(frc::SmartDashboard::GetNumber(sliderLabel + numberLabel, 0.0) / 5 * (2*M_PI));
+			} else {
+				frc::SmartDashboard::PutNumber(sliderLabel + numberLabel,  modules[x]->GetAbsoluteEncoder()->GetAngleOffset() / (2*M_PI) * 5);
+				frc::SmartDashboard::PutString(stringLabel + numberLabel, std::to_string(modules[x]->GetAbsoluteEncoder()->GetAngleOffset()));
+			}
+			if(frc::SmartDashboard::GetBoolean(buttonLabel + "2", false)) {
+				pref->PutDouble(angleOffsetLabel + numberLabel, modules[x]->GetAbsoluteEncoder()->GetAngleOffset());
+			}
+			if(frc::SmartDashboard::GetBoolean(buttonLabel + "3", false)) {
+				frc::SmartDashboard::PutString(stringLabel + numberOutputLabel, std::to_string(pref->GetDouble(angleOffsetLabel + numberLabel)));
+			}
+		}
+		frc::SmartDashboard::PutBoolean(ledLabel + "0", frc::SmartDashboard::GetBoolean(buttonLabel + "0", false));
+		frc::SmartDashboard::PutBoolean(ledLabel + "1", frc::SmartDashboard::GetBoolean(buttonLabel + "1", false));
+		frc::SmartDashboard::PutBoolean(ledLabel + "2", frc::SmartDashboard::GetBoolean(buttonLabel + "2", false));
+		frc::SmartDashboard::PutBoolean(ledLabel + "3", frc::SmartDashboard::GetBoolean(buttonLabel + "3", false));
+		frc::SmartDashboard::PutBoolean(buttonLabel + "0", false);
+		//frc::SmartDashboard::PutBoolean(buttonLabel + "1", false);
+		frc::SmartDashboard::PutBoolean(buttonLabel + "2", false);
+		frc::SmartDashboard::PutBoolean(buttonLabel + "3", false);
+		
+		
 		SwerveVector vects[NUMBER_SWERVE_MODULES];
 		SwerveVector transVect{translationX, translationY};
 		SwerveVector pivotVect{pivotX, pivotY};

@@ -87,3 +87,7 @@ double SwerveModule::getPositionY() {
 void SwerveModule::initDefaultCommand() {
 
 }
+
+AbsoluteEncoder* SwerveModule::GetAbsoluteEncoder() {
+    return steerEncoder;
+}

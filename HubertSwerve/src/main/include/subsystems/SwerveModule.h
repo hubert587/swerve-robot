@@ -36,4 +36,6 @@ class SwerveModule {
         double getPositionX();
         double getPositionY();
         void initDefaultCommand();
+
+        AbsoluteEncoder* GetAbsoluteEncoder();
 };

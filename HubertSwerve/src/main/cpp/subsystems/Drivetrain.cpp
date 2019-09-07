@@ -12,6 +12,8 @@
 #include <Robot.h>
 #include <iostream>
 #include <rev/CANSparkMax.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 
 bool Drivetrain::driveModeDifferential = true;
 
@@ -68,6 +70,7 @@ bool RB = OI::PilotJoystick.GetRawButtonPressed(6);
 //bool Trigger = OI::PilotJoystick.GetRawButton(7);
 //bool TriggerPressed = OI::PilotJoystick.GetRawButtonPressed(7);
 bool Trigger2 = OI::PilotJoystick.GetRawButton(8);
+
 
 
 double JoystickY_1 = -YAxis;
