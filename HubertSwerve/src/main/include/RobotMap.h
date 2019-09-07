@@ -40,10 +40,12 @@ SE_RightBack = 3,
 };
 
 //SEO means Steering Encoder Offset
-double SEO_LeftFront = 0.0; 
-double SEO_LeftBack = 0.0;
-double SEO_RightFront = 0.00;
-double SEO_RightBack = 0.00;
+// Read values of encoders at enabled startup. Disable the robot and turn wheels to straight front.
+// Than subtracty the values and you get these consts
+const double SEO_LeftFront = 6.07; 
+const double SEO_LeftBack = 0.60;
+const double SEO_RightFront = 0.10;
+const double SEO_RightBack = 2.80;
 //All SEO is currently set to 0 because we still need to figure out the values
 
 
