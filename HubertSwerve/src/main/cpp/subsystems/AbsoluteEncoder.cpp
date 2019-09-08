@@ -35,9 +35,7 @@ double AbsoluteEncoder::getAngle() {
     if (flipped) angle = (4.8 - voltage) * (2.0*M_PI) / 4.6;
     else angle = (voltage - 0.2) * (2.0*M_PI) / 4.6;
     std::cout << GetChannel() << "a=" << angle << "o=" << angleOffset << " ";
-    double angleRet = std::fmod((angle + angleOffset),(2.0*M_PI));
-    //frc::SmartDashboard::PutString("DB/String " + std::to_string(GetChannel()), std::to_string(angleRet));
-    return angleRet;
+    return std::fmod((angle + angleOffset),(2.0*M_PI));
 }
 
 double AbsoluteEncoder::PIDGet() {
